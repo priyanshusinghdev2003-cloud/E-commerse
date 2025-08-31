@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { MONGO_URI } from "../Utils/constant.js";
-console.log(MONGO_URI);
+
 const connectDB = async () => {
   try {
     await mongoose.connect(`${MONGO_URI}`);
