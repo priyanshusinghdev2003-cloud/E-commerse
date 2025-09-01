@@ -64,3 +64,29 @@ export const createOrder = asyncHandler(async (req, res) => {
     orders: createdOrders,
   });
 });
+
+export const getOrdersByUser = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const orders = await Order.find({ user: user._id }).populate(
+    "products.product"
+  );
+  if (!orders) return res.status(404).json({ message: "Orders not found" });
+  res.status(200).json({ orders });
+});
+
+export const getOrdersBySeller = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const orders = await Order.find({ _id: id }).populate("products.product");
+  res.json(orders);
+});
+
+export const updateOrderStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
+  if (!order) return res.status(404).json({ message: "Order not found" });
+  res.json({
+    message: "Order status updated successfully",
+    order,
+  });
+});
