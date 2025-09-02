@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
@@ -32,11 +33,13 @@ function ProductCard({ product }) {
         transition={{ type: "spring", stiffness: 200, damping: 15 }}
         className="flex justify-center"
       >
-        <motion.img
-          src={product?.images}
-          alt={product?.name}
-          className="h-36 w-36 object-contain transition-transform duration-300"
-        />
+        <Link to={`/${product?._id}`}>
+          <motion.img
+            src={product?.images}
+            alt={product?.name}
+            className="h-36 w-36 object-contain transition-transform duration-300"
+          />
+        </Link>
       </motion.div>
 
       <motion.h2

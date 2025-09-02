@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "./productCard";
+import Filter from "./Filter";
 
 function HomeProduct() {
   const [products, setProducts] = useState([]);
@@ -17,7 +18,8 @@ function HomeProduct() {
     fetchProduct();
   }, []);
   return (
-    <div className="flex-3 h-full overflow-x-hidden scroll-y-auto  ">
+    <div className="p-5 flex gap-5 relative">
+      <Filter />
       <div className="grid grid-cols-3 gap-5">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />

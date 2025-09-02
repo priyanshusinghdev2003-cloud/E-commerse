@@ -6,6 +6,7 @@ import {
   getSingleProduct,
   getProductByStore,
   updateProduct,
+  getRandomProducts,
 } from "../controller/product.controller.js";
 import authenticateUser from "../middlewares/authMiddleware.js";
 
@@ -15,6 +16,7 @@ import allowRoles from "../middlewares/allowRoles.middleware.js";
 const router = express.Router();
 
 router.route("/").get(getAllProduct);
+router.route("/random-products").get(getRandomProducts);
 router.route("/:id").get(getSingleProduct);
 router
   .route("/create")

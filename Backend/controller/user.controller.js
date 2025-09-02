@@ -50,7 +50,8 @@ export const loginUser = asyncHandler(async (req, res) => {
       .cookie("authToken", token, {
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: "strict",
+        secure: false,
+        sameSite: "lax",
       })
       .json({
         message: "User Login Successfully",

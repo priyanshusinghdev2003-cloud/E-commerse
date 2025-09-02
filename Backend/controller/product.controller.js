@@ -15,11 +15,19 @@ export const getAllProduct = asyncHandler(async (req, res) => {
 // Get Single Product
 export const getSingleProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const product = await Product.findById(id);
+  let product = await Product.findById(id).populate("store", "name");
+  const relatedProducts = await Product.find({
+    category: product.category,
+  }).limit(5);
 
   if (!product) {
     return res.status(404).json({ message: "Product not found" });
   }
+
+  product = {
+    ...product._doc,
+    relatedProducts,
+  };
 
   res.status(200).json({
     message: "Single product fetched successfully",
@@ -116,6 +124,15 @@ export const getProductByStore = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     message: "Products fetched successfully",
+    products,
+  });
+});
+
+//get 4 random product
+export const getRandomProducts = asyncHandler(async (req, res) => {
+  const products = await Product.aggregate([{ $sample: { size: 4 } }]);
+  res.status(200).json({
+    message: "4 random products fetched successfully",
     products,
   });
 });
